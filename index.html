@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Jommel Dalisaymo | WordPress, Shopify & Webflow Developer</title>
+
+        <meta name="description" content="Jommel Dalisaymo is a freelance web developer from the Philippines specializing in WordPress, WooCommerce, Shopify, and Webflow. I build fast, responsive, SEO-friendly websites, custom plugins, eCommerce stores, and API integrations.">
+
+        <meta name="keywords" content="Jommel Dalisaymo, WordPress Developer, Shopify Developer, Webflow Developer, WooCommerce Developer, PHP Developer, JavaScript Developer, Freelance Web Developer Philippines, Custom WordPress Plugins, Website Developer">
+
+        <meta name="author" content="Jommel Dalisaymo">
+        <meta name="robots" content="index, follow">
+        <meta name="theme-color" content="#0A0B0E">
+
+        <link rel="canonical" href="https://jdweavestech.netlify.app/">
+
+        <!-- Open Graph -->
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="Jommel Dalisaymo | WordPress, Shopify & Webflow Developer">
+        <meta property="og:description" content="Freelance web developer specializing in WordPress, WooCommerce, Shopify, Webflow, custom plugins, performance optimization, and modern web solutions.">
+        <meta property="og:url" content="https://jdweavestech.netlify.app/">
+        <meta property="og:image" content="https://jdweavestech.netlify.app/assets/images/jom_pic.png">
+        <meta property="og:site_name" content="Jommel Dalisaymo Portfolio">
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Jommel Dalisaymo | WordPress, Shopify & Webflow Developer">
+        <meta name="twitter:description" content="Building fast, scalable WordPress, Shopify, and Webflow websites for businesses worldwide.">
+        <meta name="twitter:image" content="https://YOURDOMAIN.com/assets/images/og-image.jpg">
+
+        <link rel="icon" type="image/png" href="/assets/images/favicon/favicon-96x96.png" sizes="96x96">
+        <link rel="icon" type="image/svg+xml" href="/assets/images/favicon/favicon.svg">
+        <link rel="shortcut icon" href="/assets/images/favicon/favicon.ico">
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon/apple-touch-icon.png">
+        <link rel="manifest" href="/site.webmanifest">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+        <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <link rel="stylesheet" href="https://unpkg.com/github-calendar@latest/dist/github-calendar-responsive.css">
+        <script src="https://unpkg.com/github-calendar@latest/dist/github-calendar.min.js"></script>
+
+        <link rel="stylesheet" href="/assets/css/style.css">
+
+    </head>
+    <body class="is-loading">
+
+        <div class="preloader" id="preloader">
+            <div class="preloader-inner">
+                <div class="preloader-logo"><span class="bracket">&lt;</span> Jom <span class="bracket">/&gt;</span></div>
+                <div class="preloader-line mono" id="preloaderLine">$ npm run dev</div>
+                <div class="preloader-bar"><div class="preloader-bar-fill" id="preloaderFill"></div></div>
+                <div class="preloader-count mono" id="preloaderCount">00%</div>
+            </div>
+        </div>
+
+        <div class="cursor-ring" id="cursorRing"><span id="cursorLabel"></span></div>
+        <div class="cursor-dot" id="cursorDot"></div>
+
+        <header id="siteHeader">
+            <div class="wrap">
+                <nav>
+                    <a href="#top" class="logo"><span class="bracket">&lt;</span>Jom<span class="bracket">/&gt;</span></a>
+                    <div class="nav-links">
+                        <a href="#about">About</a>
+                        <a href="#process">Process</a>
+                        <a href="#stack">Stack</a>
+                        <a href="#work">Work</a>
+                        <a href="#testimonials">Testimonials</a>
+                        <a href="#contact">Contact</a>
+                    </div>
+                    <div class="nav-right">
+                        <button class="theme-toggle" id="themeToggle" data-cursor="click" aria-label="Toggle color theme">
+                            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+                            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
+                        </button>
+                        <a href="#contact" class="btn btn-nav" data-cursor="hire">Hire me</a>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <main id="top">
+
+            <!-- HERO -->
+            <section class="hero" id="hero">
+                <div class="wrap hero-grid">
+                <div>
+                    <div class="eyebrow"><span class="dot"></span> Available for new projects</div>
+                    <h1>
+                    <span class="line"><span>Full-stack developer</span></span>
+                    <span class="line"><span>building products <em>end to end.</em></span></span>
+                    </h1>
+                    <p class="lead">I'm Jom — I design, build, and ship web applications, from the database schema to the pixel on screen. Seven years turning ambitious ideas into fast, reliable software.</p>
+                    <div class="hero-cta">
+                        <a href="#work" class="btn" data-cursor="view">View my work</a>
+                        <a href="#contact" class="btn ghost" data-cursor="click">Start a project</a>
+                    </div>
+                    <div class="stats-row">
+                    <div class="stat"><b>04+</b><span> Years shipping code</span></div>
+                    <div class="stat"><b>40+</b><span> Projects launched</span></div>
+                    <div class="stat"><b>20+</b><span> Happy clients</span></div>
+                    <div class="stat"><b>100%</b><span>Uptime obsession</span></div>
+                    </div>
+                </div>
+
+                <div class="code-window reveal" id="codeWindow">
+                    <div class="code-topbar">
+                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                    <span class="file">profile.js</span>
+                    </div>
+                    <div class="code-body" id="typedCode"></div>
+                </div>
+                </div>
+            </section>
+
+            <!-- MARQUEE -->
+            <div class="marquee-strip">
+                <div class="marquee-track" id="marqueeTrack">
+                    <span><i>WordPress</i> WooCommerce <i>Custom Themes</i> Custom Plugins <i>Shopify</i> Webflow <i>HubSpot</i> Performance <i>REST APIs</i> GSAP <i>Elementor</i> Git</span>
+                    <span><i>WordPress</i> WooCommerce <i>Custom Themes</i> Custom Plugins <i>Shopify</i> Webflow <i>HubSpot</i> Performance <i>REST APIs</i> GSAP <i>Elementor</i> Git</span>
+                    <span><i>WordPress</i> WooCommerce <i>Custom Themes</i> Custom Plugins <i>Shopify</i> Webflow <i>HubSpot</i> Performance <i>REST APIs</i> GSAP <i>Elementor</i> Git</span>
+                    <span><i>WordPress</i> WooCommerce <i>Custom Themes</i> Custom Plugins <i>Shopify</i> Webflow <i>HubSpot</i> Performance <i>REST APIs</i> GSAP <i>Elementor</i> Git</span>
+                </div>
+            </div>
+
+            <!-- ABOUT -->
+            <section id="about">
+                <div class="wrap about-grid">
+                    <div class="about-photo-wrap reveal">
+                        <div class="about-photo">
+                            <!-- <img src="https://api.dicebear.com/7.x/notionists/svg?seed=Alex-Rivera-Dev&backgroundColor=b6e3f4,c0aede,d1d4f9" alt="Illustrated portrait of Jommel Dalisaymo"> -->
+                            <!-- <img src="https://api.dicebear.com/10.x/notionists/svg?beardVariant=variant02,variant04,variant06,variant09&clothesVariant=variant23&clothesGraphicVariant=&eyebrowsVariant=variant07&eyesVariant=variant05&gestureVariant=waveLongArm&glassesVariant=&mouthVariant=variant30&noseVariant=variant07&hairVariant=variant54&scale=0.8&translateY=10&translateX=-5&seed=jom2026" alt="Illustrated portrait of Jommel Dalisaymo"> -->
+                            <img src="/assets/images/jom_pic.png" alt="Portrait of Jommel Dalisaymo">
+                        </div>
+                    </div>
+                    <div class="about-text">
+                        <span class="kicker">About</span>
+                        <h2 class="reveal" style="margin-bottom:28px;">A developer who cares as much about the build as the launch.</h2>
+                        <p class="reveal"><strong>I began my journey building WordPress websites for local businesses</strong> and have since grown into developing custom web solutions for clients around the world.</p>
+                        <p class="reveal">I specialize in WordPress, WooCommerce, Shopify, and Webflow, creating websites that are fast, scalable, and easy to manage.</p>
+                        <p class="reveal">Whether it's developing custom plugins, integrating third-party services, optimizing performance, or building eCommerce experiences, I focus on delivering clean, reliable solutions that help businesses grow. Outside of client projects, I'm always learning new technologies and building tools that improve my workflow as a developer.</p>
+                        <div class="fact-grid reveal">
+                        <div class="fact"><b>Based in</b><span>Zambales, Philippines · remote-first</span></div>
+                        <div class="fact"><b>Focus</b><span>WordPress, Shopify, & Webflow Development</span></div>
+                        <div class="fact"><b>Currently</b><span>Open to freelance & contract work</span></div>
+                        <div class="fact"><b>Response time</b><span>Usually within 24 hours</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PROCESS -->
+            <section id="process">
+                <div class="wrap">
+                <div class="section-head">
+                    <span class="kicker">Process</span>
+                    <h2>From a rough idea to something you can ship.</h2>
+                    <p>A straightforward process, repeated on every project so nothing gets lost between the brief and production.</p>
+                </div>
+                <div class="process-list">
+                    <div class="process-item reveal">
+                    <span class="num">01</span>
+                    <h3>Discover</h3>
+                    <p>Understand the goal, the users, and the constraints before a single line of code gets written.</p>
+                    </div>
+                    <div class="process-item reveal">
+                    <span class="num">02</span>
+                    <h3>Design</h3>
+                    <p>Wireframe the flows and data model together, so the interface and the backend agree from day one.</p>
+                    </div>
+                    <div class="process-item reveal">
+                    <span class="num">03</span>
+                    <h3>Develop</h3>
+                    <p>Build in small, reviewable increments — front end and API in parallel, tested as they go.</p>
+                    </div>
+                    <div class="process-item reveal">
+                    <span class="num">04</span>
+                    <h3>Deploy</h3>
+                    <p>Ship behind CI/CD, with monitoring and rollback in place before real users ever see it.</p>
+                    </div>
+                    <div class="process-item reveal">
+                    <span class="num">05</span>
+                    <h3>Support</h3>
+                    <p>Stick around after launch for fixes, iteration, and the occasional 2am alert.</p>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+            <!-- SKILLS -->
+            <section id="stack">
+                <div class="wrap skills-grid">
+                    <div>
+                        <span class="kicker">Stack</span>
+                        <h2 style="margin-bottom:24px;">The tools I reach for most.</h2>
+                        <p style="color:var(--muted); font-size:17px; margin-bottom:30px; max-width:46ch;">Not married to any single stack — but this is where I'm fastest, and where I've shipped the most production systems.</p>
+                        <div class="pkg-card reveal">
+                                <div><span class="brace">{</span></div>
+                                <div>&nbsp;&nbsp;<span class="k">"cms"</span>: <span class="v">["WordPress", "Shopify", "Webflow"]</span>,</div>
+                                <div>&nbsp;&nbsp;<span class="k">"development"</span>: <span class="v">["PHP", "JavaScript", "HTML5", "CSS3"]</span>,</div>
+                                <div>&nbsp;&nbsp;<span class="k">"ecommerce"</span>: <span class="v">["WooCommerce", "Shopify"]</span>,</div>
+                                <div>&nbsp;&nbsp;<span class="k">"integrations"</span>: <span class="v">["HubSpot", "REST API"]</span>,</div>
+                                <div>&nbsp;&nbsp;<span class="k">"animation"</span>: <span class="v">["GSAP"]</span>,</div>
+                                <div>&nbsp;&nbsp;<span class="k">"version control"</span>: <span class="v">["Git", "GitHub"]</span></div>
+                                <div><span class="brace">}</span></div>
+                        </div>
+                    </div>
+                    <div class="tag-cloud reveal">
+                        <span class="tag">WordPress</span>
+                        <span class="tag">WooCommerce</span>
+                        <span class="tag">Shopify</span>
+                        <span class="tag">Webflow</span>
+                        <span class="tag">Custom Plugins</span>
+                        <span class="tag">Theme Development</span>
+                        <span class="tag">PHP</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">REST APIs</span>
+                        <span class="tag">HubSpot</span>
+                        <span class="tag">Elementor</span>
+                        <span class="tag">GSAP</span>
+                        <span class="tag">Git</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">Performance</span>
+                        <span class="tag">SEO</span>
+                        <span class="tag">Responsive Design</span>
+                        <span class="tag">Figma</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PROJECTS -->
+            <section id="work">
+                <div class="wrap">
+                    <div class="section-head">
+                        <span class="kicker">Selected work</span>
+                        <h2>A few projects worth showing.</h2>
+                        <p>A mix of client work and independent builds — sample projects below, ready for you to swap with your own.</p>
+                    </div>
+                    <div class="nda-banner reveal">
+                        <span class="nda-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>NDA Protected</span>
+                        <p>Some projects below were built under a signed client NDA. Names, real screenshots, and certain details are withheld or generalized here to honor that agreement — I'm happy to walk you through the real product, metrics, and code on a call.</p>
+                    </div>
+                    <div class="project-grid" id="projectGrid">
+
+
+                    </div>
+                    <div class="load-more-wrap reveal">
+                        <button class="btn" id="loadMoreBtn" data-cursor="more">
+                            Load More Projects
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PROJECT MODAL -->
+            <div class="project-modal-overlay" id="projectModalOverlay" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="Project Modal">
+                <div class="project-modal" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="Project Modal">
+                    <div class="project-modal-topbar">
+                        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                        <span class="file mono" id="modalFile">project.md</span>
+                        <button class="modal-close" id="modalClose" data-cursor="click" aria-label="Close">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+                        </button>
+                    </div>
+                    <div class="project-modal-body">
+                        <div class="modal-media">
+                            <img id="modalImage" src="" alt="">
+                            <!-- <span class="modal-nda mono" id="modalNda">🔒 NDA Protected</span> -->
+                        </div>
+                        <div class="modal-info">
+                            <span class="kicker" id="modalKicker">Selected work</span>
+                            <h3 id="modalTitle">Project title</h3>
+                            <p id="modalDescription">Project description goes here.</p>
+                            <!-- <div class="modal-nda-note" id="modalNdaNote">
+                                <strong>Under client NDA</strong> — some names, screenshots, and specifics have been generalized for this preview. Happy to share the full story on a call.
+                            </div> -->
+                            <div class="project-tags" id="modalTags"></div>
+                            <div class="modal-actions">
+                                <a href="#contact" class="btn" id="modalCta" data-cursor="click">Discuss a project like this →</a>
+                                <a href="#" target="blank" class="btn ghost" id="modalProjectLink" data-cursor="visit">Visit Live Project →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TESTIMONIALS -->
+            <section id="testimonials">
+                <div class="wrap">
+                    <div class="section-head">
+                        <span class="kicker">Kind words</span>
+                        <h2>What it's like to work together.</h2>
+                    </div>
+                    <div class="testi-grid reveal" id="testimonialsGrid"></div>
+
+                    <div class="section-actions reveal">
+                        <button
+                            id="loadMoreTestimonialsBtn"
+                            class="btn secondary"
+                            data-cursor="more">
+                            Load More Reviews
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CONTACT -->
+            <section id="contact">
+                <div class="wrap">
+                    <div class="contact-wrap reveal">
+                        <div class="contact-top">
+                            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                            <span>contact.sh</span>
+                        </div>
+                        <div class="contact-body">
+                            <div class="contact-copy">
+                                <span class="kicker">Contact</span>
+                                <h2>Have a project in mind?</h2>
+                                <p>Tell me what you're building — I typically reply within a day, and always with a real answer, not a template.</p>
+                                <a class="email-link" href="mailto:jdalisaymo.10@gmail.com" data-cursor="click">jdalisaymo.10@gmail.com ↗</a>
+                            </div>
+                            <form class="contact-form" action="https://formspree.io/f/xpqvjapp" method="POST">
+                                <div class="field">
+                                    <label for="name">name</label>
+                                    <input id="name" name="name" type="text" placeholder="Jane Doe" required>
+                                </div>
+                                <div class="field">
+                                    <label for="email">email</label>
+                                    <input id="email" name="email" type="email" placeholder="jane@company.com" required>
+                                </div>
+                                <div class="field">
+                                    <label for="message">message</label>
+                                    <textarea id="message" name="message" placeholder="Tell me about your project..." required></textarea>
+                                </div>
+                                <button type="submit" class="btn" data-cursor="send">Run send-message →</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer>
+            <div class="wrap footer-row">
+                <p>© 2026 Jommel Dalisaymo. Built with love and caffeine.</p>
+                <div class="footer-links">
+                    <a href="https://github.com/jdweavestech/" target="_blank" data-cursor="click">GitHub</a>
+                    <a href="www.linkedin.com/in/jommel-dalisaymo-94b21414b/" target="_blank" data-cursor="click">LinkedIn</a>
+                </div>
+            </div>
+        </footer>
+
+        <button class="scroll-top" aria-label="Scroll to top" data-cursor="click">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 17 17 7M8 7h9v9"/>
+            </svg>
+        </button>
+
+        <script src="/assets/js/script.js"></script>
+
+        <script src="https://www.google.com/recaptcha/api.js?render=6LfuzV8tAAAAAGfhzy9_uklw_5937G2r5LEb1ctQ"></script>
+    </body>
+</html>
