@@ -334,15 +334,31 @@
                                     <label for="name">name</label>
                                     <input id="name" name="name" type="text" placeholder="Jane Doe" required>
                                 </div>
+
                                 <div class="field">
                                     <label for="email">email</label>
                                     <input id="email" name="email" type="email" placeholder="jane@company.com" required>
                                 </div>
+
                                 <div class="field">
                                     <label for="message">message</label>
                                     <textarea id="message" name="message" placeholder="Tell me about your project..." required></textarea>
                                 </div>
-                                <button type="submit" class="btn" data-cursor="send">Run send-message →</button>
+
+                                <!-- Honeypot -->
+                                <div class="hp-field" aria-hidden="true">
+                                    <label for="_gotcha">Leave this field empty</label>
+                                    <input
+                                        type="text"
+                                        id="_gotcha"
+                                        name="_gotcha"
+                                        tabindex="-1"
+                                        autocomplete="off">
+                                </div>
+
+                                <button type="submit" class="btn" data-cursor="send">
+                                    Run send-message →
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -368,7 +384,5 @@
         </button>
 
         <script src="/assets/js/script.js"></script>
-
-        <script src="https://www.google.com/recaptcha/api.js?render=6LfuzV8tAAAAAGfhzy9_uklw_5937G2r5LEb1ctQ"></script>
     </body>
 </html>

@@ -638,6 +638,13 @@ section{ padding:60px 0; }
 .field textarea{ resize:none; height:70px; }
 .contact-form .btn{ width:100%; justify-content:center; margin-top:8px; }
 
+.hp-field {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    pointer-events: none;
+}
+
 /* ---------- footer ---------- */
 footer{ border-top:1px solid var(--border); padding:44px 0; }
 .footer-row{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }

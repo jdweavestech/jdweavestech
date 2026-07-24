@@ -244,20 +244,7 @@ form.addEventListener("submit", async (e) => {
     btn.textContent = "Sending...";
 
     try {
-
-        // Wait until reCAPTCHA is ready
-        await new Promise(resolve => grecaptcha.ready(resolve));
-
-        // Generate token
-        const token = await grecaptcha.execute("6LfuzV8tAAAAAGfhzy9_uklw_5937G2r5LEb1ctQ", {
-            action: "submit"
-        });
-
-        // Build form data
         const formData = new FormData(form);
-
-        // Add the reCAPTCHA token
-        formData.append("g-recaptcha-response", token);
 
         const response = await fetch(form.action, {
             method: "POST",
@@ -269,10 +256,7 @@ form.addEventListener("submit", async (e) => {
 
         const data = await response.json();
 
-        console.log(data);
-
         if (response.ok) {
-
             form.reset();
 
             Swal.fire({
@@ -308,7 +292,6 @@ form.addEventListener("submit", async (e) => {
 
     btn.disabled = false;
     btn.textContent = "Run send-message →";
-
 });
 
 /* ---------------- MARQUEE ---------------- */
