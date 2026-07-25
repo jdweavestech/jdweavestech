@@ -329,7 +329,42 @@ body.admin-body button, body.admin-body a{ cursor:pointer; }
 .tag-chip button{ display:flex; width:15px; height:15px; }
 .tag-chip svg{ width:11px; height:11px; }
 
-@media (max-width:720px){
+
+
+@media only screen and (max-width: 980px)
+{
+
+}
+@media only screen and (max-width: 767px)
+{
+    .admin-modal-overlay
+    {
+        padding: 20px;
+    }
+    .admin-modal-actions
+    {
+        flex-direction: column;
+    }
     .admin-main{ padding:26px 16px 70px; }
     .admin-topbar{ padding:14px 16px; }
+}
+@media only screen and (max-width: 500px)
+{
+    .admin-main 
+    {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .admin-modal-overlay
+    {
+        padding: 10px;
+    }
+    .admin-modal-actions-right
+    {
+        flex-wrap: wrap;
+    }
+    .admin-pill
+    {
+        display: none;
+    }
 }
