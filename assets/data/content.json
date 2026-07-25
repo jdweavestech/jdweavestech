@@ -4,7 +4,11 @@
       "title": "Lorem Ipsum",
       "image": "https://api.dicebear.com/9.x/shapes/svg?seed=project-one",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "tags": ["WordPress", "PHP", "JavaScript"],
+      "tags": [
+        "WordPress",
+        "PHP",
+        "JavaScript"
+      ],
       "link": "https://example.com",
       "nda": false
     },
@@ -12,7 +16,12 @@
       "title": "Dolor Sit",
       "image": "https://api.dicebear.com/9.x/shapes/svg?seed=project-two",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam quis nostrud exercitation ullamco.",
-      "tags": ["Shopify", "Liquid", "CSS", "HubSpot"],
+      "tags": [
+        "Shopify",
+        "Liquid",
+        "CSS",
+        "HubSpot"
+      ],
       "link": "https://example.com",
       "nda": false
     },
@@ -20,7 +29,11 @@
       "title": "Consectetur",
       "image": "https://api.dicebear.com/9.x/shapes/svg?seed=project-three",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "tags": ["WordPress", "WooCommerce", "REST API"],
+      "tags": [
+        "WordPress",
+        "WooCommerce",
+        "REST API"
+      ],
       "link": "",
       "nda": false
     },
@@ -28,7 +41,11 @@
       "title": "Adipiscing Elit",
       "image": "https://api.dicebear.com/9.x/shapes/svg?seed=project-four",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse.",
-      "tags": ["Webflow", "GSAP", "Performance"],
+      "tags": [
+        "Webflow",
+        "GSAP",
+        "Performance"
+      ],
       "link": "",
       "nda": false
     },
@@ -36,7 +53,11 @@
       "title": "Project Five",
       "image": "https://api.dicebear.com/9.x/shapes/svg?seed=project-five",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.",
-      "tags": ["PHP", "MySQL", "API"],
+      "tags": [
+        "PHP",
+        "MySQL",
+        "API"
+      ],
       "link": "https://example.com",
       "nda": false
     },
@@ -44,7 +65,10 @@
       "title": "Project Six",
       "image": "https://api.dicebear.com/9.x/shapes/svg?seed=project-six",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur.",
-      "tags": ["WordPress", "WooCommerce"],
+      "tags": [
+        "WordPress",
+        "WooCommerce"
+      ],
       "link": "",
       "nda": false
     },
@@ -52,7 +76,10 @@
       "title": "Project Seven",
       "image": "https://api.dicebear.com/9.x/shapes/svg?seed=project-seven",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum.",
-      "tags": ["Shopify", "Liquid"],
+      "tags": [
+        "Shopify",
+        "Liquid"
+      ],
       "link": "",
       "nda": false
     },
@@ -60,7 +87,10 @@
       "title": "Project Eight",
       "image": "https://api.dicebear.com/9.x/shapes/svg?seed=project-eight",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id ligula porta felis euismod semper.",
-      "tags": ["Webflow", "GSAP"],
+      "tags": [
+        "Webflow",
+        "GSAP"
+      ],
       "link": "",
       "nda": false
     }
