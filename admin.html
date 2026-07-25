@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Dashboard | Jommel Dalisaymo</title>
+        <meta name="robots" content="noindex, nofollow">
+
+        <link rel="icon" type="image/png" href="/assets/images/favicon/favicon-96x96.png" sizes="96x96">
+        <link rel="icon" type="image/svg+xml" href="/assets/images/favicon/favicon.svg">
+        <link rel="shortcut icon" href="/assets/images/favicon/favicon.ico">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <link rel="stylesheet" href="/assets/css/style.css">
+        <link rel="stylesheet" href="/assets/css/admin.css">
+    </head>
+    <body class="admin-body">
+
+        <div class="admin-shell">
+
+            <!-- LOGIN / SETUP SCREEN -->
+            <div class="admin-login-wrap" id="loginScreen">
+                <div class="admin-login-card">
+                    <div class="admin-login-top">
+                        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                        <span>login.sh</span>
+                    </div>
+                    <div class="admin-login-body">
+                        <h1><span class="bracket" style="color:var(--accent)">&lt;</span>Jom<span class="bracket" style="color:var(--accent)">/&gt;</span> Dashboard</h1>
+                        <p id="loginSub">Enter your password to manage projects and testimonials.</p>
+
+                        <div class="admin-error" id="loginError"></div>
+
+                        <form id="loginForm">
+                            <div class="field">
+                                <label for="pwInput">password</label>
+                                <input id="pwInput" type="password" autocomplete="current-password" required>
+                            </div>
+                            <div class="field" id="pwConfirmField" style="display:none">
+                                <label for="pwConfirmInput">confirm_password</label>
+                                <input id="pwConfirmInput" type="password" autocomplete="new-password">
+                            </div>
+                            <button type="submit" class="btn" id="loginSubmit" style="width:100%;justify-content:center;">
+                                Unlock dashboard →
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DASHBOARD -->
+            <div id="dashboard" style="display:none">
+
+                <header class="admin-topbar">
+                    <a href="index.html" class="logo">
+                        <span class="bracket" style="color:var(--accent)">&lt;</span>Jom<span class="bracket" style="color:var(--accent)">/&gt;</span>
+                        <span class="mono" style="font-size:12px;color:var(--muted);margin-left:6px;">/admin</span>
+                    </a>
+                    <div class="admin-top-right">
+                        <span class="admin-pill" id="draftPill"><span class="dot"></span> <span id="draftPillText">All changes saved</span></span>
+
+                        <a href="index.html" target="_blank" class="icon-btn" title="View live site">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>
+                        </a>
+                        <button class="icon-btn" id="themeToggleAdmin" title="Toggle theme">
+                            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+                            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
+                        </button>
+                        <button class="icon-btn" id="logoutBtn" title="Log out">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+                        </button>
+                    </div>
+                </header>
+
+                <main class="admin-main">
+                    <div class="wrap">
+
+                        <nav class="admin-tabs">
+                            <button class="admin-tab is-active" data-tab="projects">Projects <span class="count" id="projectsCount">0</span></button>
+                            <button class="admin-tab" data-tab="testimonials">Testimonials <span class="count" id="testimonialsCount">0</span></button>
+                            <button class="admin-tab" data-tab="publish">Publish &amp; Settings</button>
+                        </nav>
+
+                        <!-- PROJECTS -->
+                        <section class="admin-panel is-active" id="panel-projects">
+                            <div class="admin-panel-head">
+                                <div>
+                                    <h2>Projects</h2>
+                                    <p>These populate the "Work" section and the project modal on the live site — in order.</p>
+                                </div>
+                                <button class="btn" id="addProjectBtn">+ Add project</button>
+                            </div>
+                            <div class="admin-grid" id="projectsGrid"></div>
+                        </section>
+
+                        <!-- TESTIMONIALS -->
+                        <section class="admin-panel" id="panel-testimonials">
+                            <div class="admin-panel-head">
+                                <div>
+                                    <h2>Testimonials</h2>
+                                    <p>These populate the "Testimonials" section on the live site — in order.</p>
+                                </div>
+                                <button class="btn" id="addTestimonialBtn">+ Add testimonial</button>
+                            </div>
+                            <div class="admin-grid" id="testimonialsGridAdmin"></div>
+                        </section>
+
+                        <!-- PUBLISH & SETTINGS -->
+                        <section class="admin-panel" id="panel-publish">
+                            <div class="admin-panel-head">
+                                <div>
+                                    <h2>Publish &amp; settings</h2>
+                                    <p>Push your changes live, or manage this dashboard.</p>
+                                </div>
+                            </div>
+
+                            <div class="settings-grid">
+                                <div class="settings-card">
+                                    <h3>Publish to GitHub</h3>
+                                    <p>Connect the repo this site is deployed from once. After that, "Publish live" commits your changes straight to <span class="mono">assets/data/content.json</span> — your host redeploys automatically and the live site updates within about a minute.</p>
+
+                                    <div class="note-box">
+                                        <strong>About your token:</strong> it's stored only in this browser's local storage and sent only to GitHub's API — never anywhere else. Use a fine-grained token scoped just to this repo's contents.
+                                    </div>
+
+                                    <div class="field">
+                                        <label for="ghOwner">github_owner</label>
+                                        <input id="ghOwner" type="text" placeholder="jdweavestech">
+                                    </div>
+                                    <div class="admin-field-row">
+                                        <div class="field">
+                                            <label for="ghRepo">repository</label>
+                                            <input id="ghRepo" type="text" placeholder="jdweavestech">
+                                        </div>
+                                        <div class="field">
+                                            <label for="ghBranch">branch</label>
+                                            <input id="ghBranch" type="text" placeholder="main">
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <label for="ghPath">file_path</label>
+                                        <input id="ghPath" type="text" placeholder="assets/data/content.json">
+                                    </div>
+                                    <div class="field">
+                                        <label for="ghToken">access_token</label>
+                                        <input id="ghToken" type="password" placeholder="ghp_...">
+                                    </div>
+
+                                    <div class="settings-actions">
+                                        <button class="btn ghost" id="saveGhSettings">Save connection</button>
+                                        <button class="btn" id="publishBtn">Publish live →</button>
+                                    </div>
+                                    <div class="status-line" id="ghStatus"><span class="dot"></span> <span>Not connected yet</span></div>
+                                </div>
+
+                                <div>
+                                    <div class="settings-card" style="margin-bottom:22px;">
+                                        <h3>Manual export</h3>
+                                        <p>Works with any host. Download the updated file and replace <span class="mono">assets/data/content.json</span> in your project, then redeploy.</p>
+                                        <div class="settings-actions">
+                                            <button class="btn ghost" id="downloadJsonBtn">Download content.json</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="settings-card">
+                                        <h3>Dashboard password</h3>
+                                        <p>Change the password used to unlock this dashboard.</p>
+                                        <div class="field">
+                                            <label for="oldPwInput">current_password</label>
+                                            <input id="oldPwInput" type="password">
+                                        </div>
+                                        <div class="field">
+                                            <label for="newPwInput">new_password</label>
+                                            <input id="newPwInput" type="password">
+                                        </div>
+                                        <div class="settings-actions">
+                                            <button class="btn ghost" id="changePwBtn">Update password</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
+                </main>
+            </div>
+
+            <!-- PROJECT EDITOR MODAL -->
+            <div class="admin-modal-overlay" id="projectModalOverlay2" tabindex="-1" role="dialog" aria-modal="true">
+                <div class="admin-modal">
+                    <div class="admin-modal-topbar">
+                        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                        <span class="file mono" id="projectModalFile">project.md</span>
+                        <button class="modal-close" id="projectModalClose" style="margin-left:auto;width:32px;height:32px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:14px;height:14px;"><path d="M6 6l12 12M18 6 6 18"/></svg>
+                        </button>
+                    </div>
+                    <div class="admin-modal-body">
+                        <h3 id="projectModalHeading">Add project</h3>
+
+                        <div class="field">
+                            <label for="pTitle">title</label>
+                            <input id="pTitle" type="text" placeholder="e.g. Nimbus Analytics Dashboard">
+                        </div>
+
+                        <div class="field">
+                            <label for="pImage">image_url</label>
+                            <input id="pImage" type="text" placeholder="https://...">
+                            <div class="thumb-preview"><img id="pImagePreview" alt="Preview" style="display:none"></div>
+                        </div>
+
+                        <div class="field">
+                            <label for="pDescription">description</label>
+                            <textarea id="pDescription" rows="3" placeholder="What the project was and what you did"></textarea>
+                        </div>
+
+                        <div class="field">
+                            <label for="pTagsInput">tags</label>
+                            <div class="tag-input-wrap" id="pTagsWrap">
+                                <input id="pTagsInput" type="text" placeholder="Type a tag and press Enter">
+                            </div>
+                            <p class="field-hint">e.g. WordPress, Shopify, JavaScript — press Enter after each one</p>
+                        </div>
+
+                        <div class="field">
+                            <label for="pLink">live_link <span class="field-hint" style="display:inline">(optional)</span></label>
+                            <input id="pLink" type="text" placeholder="https://client-site.com">
+                        </div>
+
+                        <div class="switch-row">
+                            <div class="switch-label">
+                                <b>Under NDA</b>
+                                <span>Shows an "NDA Protected" badge instead of the live link</span>
+                            </div>
+                            <button type="button" class="switch" id="pNdaSwitch"></button>
+                        </div>
+
+                        <div class="admin-modal-actions">
+                            <button class="btn danger" id="pDeleteBtn" style="display:none;">Delete project</button>
+                            <div class="admin-modal-actions-right">
+                                <button class="btn ghost" id="pCancelBtn">Cancel</button>
+                                <button class="btn" id="pSaveBtn">Save project</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TESTIMONIAL EDITOR MODAL -->
+            <div class="admin-modal-overlay" id="testimonialModalOverlay" tabindex="-1" role="dialog" aria-modal="true">
+                <div class="admin-modal">
+                    <div class="admin-modal-topbar">
+                        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                        <span class="file mono">testimonial.md</span>
+                        <button class="modal-close" id="testiModalClose" style="margin-left:auto;width:32px;height:32px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:14px;height:14px;"><path d="M6 6l12 12M18 6 6 18"/></svg>
+                        </button>
+                    </div>
+                    <div class="admin-modal-body">
+                        <h3 id="testiModalHeading">Add testimonial</h3>
+
+                        <div class="admin-field-row">
+                            <div class="field">
+                                <label for="tName">name</label>
+                                <input id="tName" type="text" placeholder="Jane Doe">
+                            </div>
+                            <div class="field">
+                                <label for="tRole">role</label>
+                                <input id="tRole" type="text" placeholder="Founder, Company">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label for="tAvatar">avatar_url</label>
+                            <input id="tAvatar" type="text" placeholder="https://...">
+                            <p class="field-hint">Leave blank to auto-generate one</p>
+                        </div>
+
+                        <div class="field">
+                            <label for="tQuote">quote</label>
+                            <textarea id="tQuote" rows="3" placeholder="What they said about working with you"></textarea>
+                        </div>
+
+                        <div class="admin-modal-actions">
+                            <button class="btn danger" id="tDeleteBtn" style="display:none;">Delete testimonial</button>
+                            <div class="admin-modal-actions-right">
+                                <button class="btn ghost" id="tCancelBtn">Cancel</button>
+                                <button class="btn" id="tSaveBtn">Save testimonial</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <script src="/assets/js/admin.js"></script>
+    </body>
+</html>

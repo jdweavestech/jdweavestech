@@ -1,0 +1,124 @@
+{
+  "projects": [
+    {
+      "title": "Lorem Ipsum",
+      "image": "https://api.dicebear.com/9.x/shapes/svg?seed=project-one",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "tags": ["WordPress", "PHP", "JavaScript"],
+      "link": "https://example.com",
+      "nda": false
+    },
+    {
+      "title": "Dolor Sit",
+      "image": "https://api.dicebear.com/9.x/shapes/svg?seed=project-two",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam quis nostrud exercitation ullamco.",
+      "tags": ["Shopify", "Liquid", "CSS", "HubSpot"],
+      "link": "https://example.com",
+      "nda": false
+    },
+    {
+      "title": "Consectetur",
+      "image": "https://api.dicebear.com/9.x/shapes/svg?seed=project-three",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "tags": ["WordPress", "WooCommerce", "REST API"],
+      "link": "",
+      "nda": false
+    },
+    {
+      "title": "Adipiscing Elit",
+      "image": "https://api.dicebear.com/9.x/shapes/svg?seed=project-four",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse.",
+      "tags": ["Webflow", "GSAP", "Performance"],
+      "link": "",
+      "nda": false
+    },
+    {
+      "title": "Project Five",
+      "image": "https://api.dicebear.com/9.x/shapes/svg?seed=project-five",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.",
+      "tags": ["PHP", "MySQL", "API"],
+      "link": "https://example.com",
+      "nda": false
+    },
+    {
+      "title": "Project Six",
+      "image": "https://api.dicebear.com/9.x/shapes/svg?seed=project-six",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur.",
+      "tags": ["WordPress", "WooCommerce"],
+      "link": "",
+      "nda": false
+    },
+    {
+      "title": "Project Seven",
+      "image": "https://api.dicebear.com/9.x/shapes/svg?seed=project-seven",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum.",
+      "tags": ["Shopify", "Liquid"],
+      "link": "",
+      "nda": false
+    },
+    {
+      "title": "Project Eight",
+      "image": "https://api.dicebear.com/9.x/shapes/svg?seed=project-eight",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id ligula porta felis euismod semper.",
+      "tags": ["Webflow", "GSAP"],
+      "link": "",
+      "nda": false
+    }
+  ],
+  "testimonials": [
+    {
+      "name": "Priya Shah",
+      "role": "Founder, Nimbus Analytics",
+      "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=priya-shah",
+      "quote": "Jom rebuilt our dashboard in six weeks and it's been rock solid since. Clear communication the entire way through."
+    },
+    {
+      "name": "Marcus Lee",
+      "role": "COO, Loom Market",
+      "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=marcus-lee",
+      "quote": "We handed over a messy spec and got back a marketplace that actually handles payouts correctly. Rare combination of speed and care."
+    },
+    {
+      "name": "Dana Kim",
+      "role": "Head of Sales, PulseCRM",
+      "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=dana-kim",
+      "quote": "Our CRM went from a spreadsheet to a proper tool our sales team actually enjoys using. Support after launch has been excellent too."
+    },
+    {
+      "name": "Sophia Turner",
+      "role": "Marketing Director",
+      "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=sophia-turner",
+      "quote": "Excellent communication from start to finish. The final website exceeded our expectations."
+    },
+    {
+      "name": "Michael Ross",
+      "role": "Startup Founder",
+      "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=michael-ross",
+      "quote": "Fast turnaround, clean code, and every feature worked exactly as discussed."
+    },
+    {
+      "name": "Emily Chen",
+      "role": "eCommerce Manager",
+      "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=emily-chen",
+      "quote": "Our Shopify store is significantly faster after the optimization work. Highly recommended."
+    },
+    {
+      "name": "Ryan Cooper",
+      "role": "Product Manager",
+      "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=ryan-cooper",
+      "quote": "Professional, responsive, and always willing to suggest better technical solutions."
+    },
+    {
+      "name": "Isabella Moore",
+      "role": "Agency Owner",
+      "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=isabella-moore",
+      "quote": "We've worked together on multiple projects now. Every delivery has been on time and reliable."
+    },
+    {
+      "name": "David Kim",
+      "role": "Business Owner",
+      "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=david-kim",
+      "quote": "One of the best developers we've hired. Great attention to detail and excellent communication."
+    }
+  ]
+}

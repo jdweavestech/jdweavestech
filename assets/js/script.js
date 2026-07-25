@@ -458,90 +458,7 @@ aboutPhoto.addEventListener("mouseleave", () => {
 
 
 /* ---------------- PROJECT MODAL ---------------- */
-const projectData = {
-    projectOne: {
-        kicker: "01 · Project",
-        file: "project-one.md",
-        title: "Lorem Ipsum",
-        image: "https://api.dicebear.com/9.x/shapes/svg?seed=project-one",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        tags: ["WordPress", "PHP", "JavaScript"],
-        link: "https://example.com",
-        nda: false
-    },
-
-    projectTwo: {
-        kicker: "02 · Project",
-        file: "project-two.md",
-        title: "Dolor Sit",
-        image: "https://api.dicebear.com/9.x/shapes/svg?seed=project-two",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam quis nostrud exercitation ullamco.",
-        tags: ["Shopify", "Liquid", "CSS", "HubSpot"],
-        link: "https://example.com",
-        nda: false
-    },
-
-    projectThree: {
-        kicker: "03 · Project",
-        file: "project-three.md",
-        title: "Consectetur",
-        image: "https://api.dicebear.com/9.x/shapes/svg?seed=project-three",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        tags: ["WordPress", "WooCommerce", "REST API"],
-        nda: false
-    },
-
-    projectFour: {
-        kicker: "04 · Project",
-        file: "project-four.md",
-        title: "Adipiscing Elit",
-        image: "https://api.dicebear.com/9.x/shapes/svg?seed=project-four",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse.",
-        tags: ["Webflow", "GSAP", "Performance"],
-        nda: false
-    },
-
-    projectFive: {
-        kicker: "05 · Project",
-        file: "project-five.md",
-        title: "Project Five",
-        image: "https://api.dicebear.com/9.x/shapes/svg?seed=project-five",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.",
-        tags: ["PHP", "MySQL", "API"],
-        link: "https://example.com",
-        nda: false
-    },
-
-    projectSix: {
-        kicker: "06 · Project",
-        file: "project-six.md",
-        title: "Project Six",
-        image: "https://api.dicebear.com/9.x/shapes/svg?seed=project-six",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur.",
-        tags: ["WordPress", "WooCommerce"],
-        nda: false
-    },
-
-    projectSeven: {
-        kicker: "07 · Project",
-        file: "project-seven.md",
-        title: "Project Seven",
-        image: "https://api.dicebear.com/9.x/shapes/svg?seed=project-seven",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum.",
-        tags: ["Shopify", "Liquid"],
-        nda: false
-    },
-
-    projectEight: {
-        kicker: "08 · Project",
-        file: "project-eight.md",
-        title: "Project Eight",
-        image: "https://api.dicebear.com/9.x/shapes/svg?seed=project-eight",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id ligula porta felis euismod semper.",
-        tags: ["Webflow", "GSAP"],
-        nda: false
-    }
-};
+let projectData = {};
 
 const modalOverlay = document.getElementById('projectModalOverlay');
 const modalEl = document.getElementById('projectModal');
@@ -552,8 +469,8 @@ const modalFile = document.getElementById('modalFile');
 const modalProjectLink = document.getElementById("modalProjectLink");
 const modalDescription = document.getElementById('modalDescription');
 const modalTags = document.getElementById('modalTags');
-// const modalNda = document.getElementById('modalNda');
-// const modalNdaNote = document.getElementById('modalNdaNote');
+const modalNda = document.getElementById('modalNda');
+const modalNdaNote = document.getElementById('modalNdaNote');
 let lastFocusedEl = null;
 
 // Initial page load
@@ -577,6 +494,9 @@ function openProjectModal(key){
 
     modalImage.src = data.image;
     modalImage.alt = data.title + " project preview";
+
+    if (modalNda) modalNda.style.display = data.nda ? "block" : "none";
+    if (modalNdaNote) modalNdaNote.style.display = data.nda ? "block" : "none";
 
     modalTitle.textContent = data.title;
     modalKicker.textContent = data.kicker;
@@ -694,78 +614,7 @@ const loadMoreBtn = document.getElementById("loadMoreBtn");
 const PROJECTS_PER_LOAD = 4;
 let visibleProjects = 0;
 
-const projects = [
-    {
-        key: "projectOne",
-        index: "01",
-        title: "Lorem Ipsum",
-        image: "https://api.dicebear.com/9.x/shapes/svg?seed=project-one",
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        tags: ["WordPress", "PHP", "JavaScript"]
-    },
-    {
-        key: "projectTwo",
-        index: "02",
-        title: "Dolor Sit",
-        image: "https://api.dicebear.com/9.x/shapes/svg?seed=project-two",
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam quis nostrud exercitation ullamco.",
-        tags: ["Shopify", "Liquid", "CSS", "HubSpot"]
-    },
-    {
-        key: "projectThree",
-        index: "03",
-        title: "Consectetur",
-        image: "https://api.dicebear.com/9.x/shapes/svg?seed=project-three",
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        tags: ["WordPress", "WooCommerce", "REST API"]
-    },
-    {
-        key: "projectFour",
-        index: "04",
-        title: "Adipiscing Elit",
-        image: "https://api.dicebear.com/9.x/shapes/svg?seed=project-four",
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse.",
-        tags: ["Webflow", "GSAP", "Performance"]
-    },
-
-    // Duplicate examples
-    {
-        key: "projectFive",
-        index: "05",
-        title: "Project Five",
-        image: "https://api.dicebear.com/9.x/shapes/svg?seed=project-five",
-        description: "Lorem ipsum dolor sit amet.",
-        tags: ["PHP","MySQL","API"]
-    },
-    {
-        key: "projectSix",
-        index: "06",
-        title: "Project Six",
-        image: "https://api.dicebear.com/9.x/shapes/svg?seed=project-six",
-        description: "Lorem ipsum dolor sit amet.",
-        tags: ["WordPress","WooCommerce"]
-    },
-    {
-        key: "projectSeven",
-        index: "07",
-        title: "Project Seven",
-        image: "https://api.dicebear.com/9.x/shapes/svg?seed=project-seven",
-        description: "Lorem ipsum dolor sit amet.",
-        tags: ["Shopify","Liquid"]
-    },
-    {
-        key: "projectEight",
-        index: "08",
-        title: "Project Eight",
-        image: "https://api.dicebear.com/9.x/shapes/svg?seed=project-eight",
-        description: "Lorem ipsum dolor sit amet.",
-        tags: ["Webflow","GSAP"]
-    }
-];
+let projects = [];
 
 // function attachProjectEvents() {
 //     document.querySelectorAll(".project-card[data-project]").forEach((card) => {
@@ -860,6 +709,7 @@ function renderProjects(){
                     <span class="project-index mono">
                         ${project.index} / Project
                     </span>
+                    ${project.nda ? '<span class="project-nda">NDA</span>' : ''}
 
                     <img src="${project.image}" alt="${project.title}">
                 </div>
@@ -905,9 +755,7 @@ function renderProjects(){
 
 loadMoreBtn.addEventListener("click", renderProjects);
 
-// Initial 4 projects
-renderProjects();
-attachProjectHover();
+// Initial render happens once content.json has loaded — see loadSiteContent() below.
 
 
 
@@ -920,74 +768,7 @@ const loadMoreTestimonialsBtn = document.getElementById("loadMoreTestimonialsBtn
 const TESTIMONIALS_PER_LOAD = 3;
 let visibleTestimonials = 0;
 
-const testimonials = [
-
-    {
-        name: "Priya Shah",
-        role: "Founder, Nimbus Analytics",
-        avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=priya-shah",
-        quote: "Jom rebuilt our dashboard in six weeks and it's been rock solid since. Clear communication the entire way through."
-    },
-
-    {
-        name: "Marcus Lee",
-        role: "COO, Loom Market",
-        avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=marcus-lee",
-        quote: "We handed over a messy spec and got back a marketplace that actually handles payouts correctly. Rare combination of speed and care."
-    },
-
-    {
-        name: "Dana Kim",
-        role: "Head of Sales, PulseCRM",
-        avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=dana-kim",
-        quote: "Our CRM went from a spreadsheet to a proper tool our sales team actually enjoys using. Support after launch has been excellent too."
-    },
-
-    // Additional testimonials
-
-    {
-        name: "Sophia Turner",
-        role: "Marketing Director",
-        avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=sophia-turner",
-        quote: "Excellent communication from start to finish. The final website exceeded our expectations."
-    },
-
-    {
-        name: "Michael Ross",
-        role: "Startup Founder",
-        avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=michael-ross",
-        quote: "Fast turnaround, clean code, and every feature worked exactly as discussed."
-    },
-
-    {
-        name: "Emily Chen",
-        role: "eCommerce Manager",
-        avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=emily-chen",
-        quote: "Our Shopify store is significantly faster after the optimization work. Highly recommended."
-    },
-
-    {
-        name: "Ryan Cooper",
-        role: "Product Manager",
-        avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=ryan-cooper",
-        quote: "Professional, responsive, and always willing to suggest better technical solutions."
-    },
-
-    {
-        name: "Isabella Moore",
-        role: "Agency Owner",
-        avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=isabella-moore",
-        quote: "We've worked together on multiple projects now. Every delivery has been on time and reliable."
-    },
-
-    {
-        name: "David Kim",
-        role: "Business Owner",
-        avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=david-kim",
-        quote: "One of the best developers we've hired. Great attention to detail and excellent communication."
-    }
-
-];
+let testimonials = [];
 
 function renderTestimonials() {
 
@@ -1059,5 +840,96 @@ function renderTestimonials() {
 
 loadMoreTestimonialsBtn.addEventListener("click", renderTestimonials);
 
-// Show first 3
-renderTestimonials();
+/* ---------------- DYNAMIC CONTENT LOADER ---------------- */
+/* Projects & testimonials now live in /assets/data/content.json so the
+   password-protected dashboard (/admin.html) can edit them without
+   touching any code. A small embedded fallback keeps the page from
+   ever rendering empty if the fetch fails (e.g. opened via file://). */
+
+const FALLBACK_CONTENT = {
+    projects: [
+        {
+            title: "Lorem Ipsum",
+            image: "https://api.dicebear.com/9.x/shapes/svg?seed=project-one",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            tags: ["WordPress", "PHP", "JavaScript"],
+            link: "https://example.com",
+            nda: false
+        }
+    ],
+    testimonials: [
+        {
+            name: "Priya Shah",
+            role: "Founder, Nimbus Analytics",
+            avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=priya-shah",
+            quote: "Jom rebuilt our dashboard in six weeks and it's been rock solid since."
+        }
+    ]
+};
+
+function slugify(str){
+    return (str || "project")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "") || "project";
+}
+
+function buildProjectState(rawProjects){
+    projectData = {};
+    projects = (rawProjects || []).map((p, i) => {
+        const idx = String(i + 1).padStart(2, "0");
+        const key = "project" + (i + 1);
+
+        projectData[key] = {
+            kicker: `${idx} · Project`,
+            file: slugify(p.title) + ".md",
+            title: p.title,
+            image: p.image,
+            description: p.description,
+            tags: Array.isArray(p.tags) ? p.tags : [],
+            link: p.link || "",
+            nda: !!p.nda
+        };
+
+        return {
+            key,
+            index: idx,
+            title: p.title,
+            image: p.image,
+            description: p.description,
+            tags: Array.isArray(p.tags) ? p.tags : [],
+            nda: !!p.nda
+        };
+    });
+}
+
+async function loadSiteContent(){
+    let content = null;
+
+    try {
+        const res = await fetch("/assets/data/content.json", { cache: "no-store" });
+        if (res.ok) content = await res.json();
+    } catch (err) {
+        content = null;
+    }
+
+    if (!content || !Array.isArray(content.projects) || !Array.isArray(content.testimonials)) {
+        content = FALLBACK_CONTENT;
+    }
+
+    buildProjectState(content.projects);
+    testimonials = content.testimonials;
+
+    visibleProjects = 0;
+    visibleTestimonials = 0;
+    projectGrid.innerHTML = "";
+    testimonialsGrid.innerHTML = "";
+    loadMoreBtn.style.display = "";
+    loadMoreTestimonialsBtn.style.display = "";
+
+    renderProjects();
+    attachProjectHover();
+    renderTestimonials();
+}
+
+loadSiteContent();
