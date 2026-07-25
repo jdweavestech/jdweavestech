@@ -34,7 +34,7 @@
                     </div>
                     <div class="admin-login-body">
                         <h1><span class="bracket" style="color:var(--accent)">&lt;</span>Jom<span class="bracket" style="color:var(--accent)">/&gt;</span> Dashboard</h1>
-                        <p id="loginSub">Enter your password to manage projects and testimonials.</p>
+                        <p id="loginSub">Loading…</p>
 
                         <div class="admin-error" id="loginError"></div>
 
@@ -211,8 +211,16 @@
                         </div>
 
                         <div class="field">
-                            <label for="pImage">image_url</label>
+                            <label>image</label>
+                            <div class="image-source-toggle" id="pImageToggle">
+                                <button type="button" class="is-active" data-mode="url">Image URL</button>
+                                <button type="button" data-mode="upload">Upload image</button>
+                            </div>
                             <input id="pImage" type="text" placeholder="https://...">
+                            <div class="image-upload-input" id="pImageUploadWrap" style="display:none">
+                                <input id="pImageFile" type="file" accept="image/*">
+                                <p class="field-hint" id="pImageFileHint">Uploaded images are resized and embedded directly in your content file — best kept under ~500KB.</p>
+                            </div>
                             <div class="thumb-preview"><img id="pImagePreview" alt="Preview" style="display:none"></div>
                         </div>
 
@@ -278,9 +286,17 @@
                         </div>
 
                         <div class="field">
-                            <label for="tAvatar">avatar_url</label>
+                            <label>avatar</label>
+                            <div class="image-source-toggle" id="tAvatarToggle">
+                                <button type="button" class="is-active" data-mode="url">Image URL</button>
+                                <button type="button" data-mode="upload">Upload image</button>
+                            </div>
                             <input id="tAvatar" type="text" placeholder="https://...">
-                            <p class="field-hint">Leave blank to auto-generate one</p>
+                            <div class="image-upload-input" id="tAvatarUploadWrap" style="display:none">
+                                <input id="tAvatarFile" type="file" accept="image/*">
+                                <p class="field-hint" id="tAvatarFileHint">Leave blank to auto-generate one, or upload a photo.</p>
+                            </div>
+                            <div class="avatar-thumb-preview"><img id="tAvatarPreview" alt="Preview" style="display:none"></div>
                         </div>
 
                         <div class="field">

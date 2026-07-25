@@ -1,4 +1,7 @@
 {
+  "settings": {
+    "adminPasswordHash": ""
+  },
   "projects": [
     {
       "title": "Lorem Ipsum",

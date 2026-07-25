@@ -13,7 +13,7 @@
 })();
 
 /* ---------------- STORAGE KEYS ---------------- */
-const LS_PW_HASH   = "jdw_admin_pw_hash";
+const LS_PW_HASH_LEGACY = "jdw_admin_pw_hash"; // old per-browser password (pre-sync), used only for one-time migration
 const LS_DRAFT      = "jdw_content_draft";
 const LS_GH_SETTINGS = "jdw_admin_github";
 const SS_AUTH        = "jdw_admin_session";
@@ -55,7 +55,139 @@ function slugify(str){
 }
 
 /* ==========================
+   IMAGE UPLOAD (client-side only — no server to upload to)
+   Files are resized on a canvas and embedded as a data URI directly
+   in the image/avatar field, so they publish along with the rest of
+   content.json through the existing GitHub/manual export flow.
+========================== */
+function resizeImageFile(file, maxDim, quality){
+    return new Promise((resolve, reject) => {
+        if (!file.type || !file.type.startsWith("image/")){
+            reject(new Error("Please choose an image file."));
+            return;
+        }
+        const reader = new FileReader();
+        reader.onerror = () => reject(new Error("Couldn't read that file."));
+        reader.onload = () => {
+            const img = new Image();
+            img.onerror = () => reject(new Error("Couldn't read that image."));
+            img.onload = () => {
+                let width = img.naturalWidth, height = img.naturalHeight;
+                if (width > maxDim || height > maxDim){
+                    const scale = maxDim / Math.max(width, height);
+                    width = Math.round(width * scale);
+                    height = Math.round(height * scale);
+                }
+                const canvas = document.createElement("canvas");
+                canvas.width = width;
+                canvas.height = height;
+                canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+                let dataUrl = canvas.toDataURL("image/webp", quality);
+                if (!dataUrl || dataUrl.indexOf("data:image/webp") !== 0){
+                    dataUrl = canvas.toDataURL("image/jpeg", quality);
+                }
+                resolve(dataUrl);
+            };
+            img.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+function dataUrlSizeKb(dataUrl){
+    const base64 = (dataUrl.split(",")[1] || "");
+    return Math.round((base64.length * 3 / 4) / 1024);
+}
+
+function setImageMode(toggleEl, urlInput, uploadWrapEl, mode){
+    toggleEl.querySelectorAll("button").forEach(b => b.classList.toggle("is-active", b.dataset.mode === mode));
+    urlInput.style.display = mode === "upload" ? "none" : "block";
+    uploadWrapEl.style.display = mode === "upload" ? "block" : "none";
+}
+
+function wireImageUploader({ toggleEl, urlInput, fileInput, hintEl, defaultHint, maxDim, quality }){
+    const uploadWrapEl = fileInput.closest(".image-upload-input");
+    toggleEl.querySelectorAll("button").forEach(btn => {
+        btn.addEventListener("click", () => setImageMode(toggleEl, urlInput, uploadWrapEl, btn.dataset.mode));
+    });
+
+    fileInput.addEventListener("change", async () => {
+        const file = fileInput.files[0];
+        if (!file) return;
+        hintEl.textContent = "Processing image…";
+        try {
+            const dataUrl = await resizeImageFile(file, maxDim, quality);
+            urlInput.value = dataUrl;
+            urlInput.dispatchEvent(new Event("input"));
+            const kb = dataUrlSizeKb(dataUrl);
+            hintEl.textContent = kb > 500
+                ? `Embedded (~${kb}KB) — that's fairly large for a static file; a smaller photo will keep things snappy.`
+                : `Embedded (~${kb}KB). ${defaultHint}`;
+        } catch(err){
+            hintEl.textContent = err.message || "Couldn't process that image.";
+        }
+    });
+}
+
+/* ==========================
+   CONTENT STATE
+   (loaded BEFORE auth, since the password hash itself now lives
+   inside this content — same place/publish flow as everything else)
+========================== */
+let state = { projects: [], testimonials: [], settings: { adminPasswordHash: "" } };
+
+function normalizeState(s){
+    s = s && typeof s === "object" ? s : {};
+    if (!Array.isArray(s.projects)) s.projects = [];
+    if (!Array.isArray(s.testimonials)) s.testimonials = [];
+    if (!s.settings || typeof s.settings !== "object") s.settings = { adminPasswordHash: "" };
+    if (typeof s.settings.adminPasswordHash !== "string") s.settings.adminPasswordHash = "";
+    return s;
+}
+
+async function loadState(){
+    const draft = localStorage.getItem(LS_DRAFT);
+    if (draft){
+        try {
+            state = normalizeState(JSON.parse(draft));
+        } catch(e){
+            await fetchRemoteState();
+        }
+    } else {
+        await fetchRemoteState();
+    }
+
+    // One-time migration: if this browser had a password set under the old
+    // per-device system, and nothing has been published/drafted yet, carry
+    // it over so the user doesn't get locked out — it'll just need a publish
+    // (same as any other change) to start working on other devices too.
+    const legacyHash = localStorage.getItem(LS_PW_HASH_LEGACY);
+    if (legacyHash && !state.settings.adminPasswordHash){
+        state.settings.adminPasswordHash = legacyHash;
+        saveDraft();
+    }
+}
+
+async function fetchRemoteState(){
+    try {
+        const res = await fetch(CONTENT_URL, { cache: "no-store" });
+        state = normalizeState(res.ok ? await res.json() : {});
+    } catch(e){
+        state = normalizeState({});
+    }
+}
+
+function saveDraft(){
+    localStorage.setItem(LS_DRAFT, JSON.stringify(state));
+    const pillText = document.getElementById("draftPillText");
+    if (pillText) pillText.textContent = "Saved locally — publish to go live";
+}
+
+/* ==========================
    AUTH
+   The password hash travels inside content.json, so it publishes the
+   same way project/testimonial edits do (GitHub or manual export) and
+   then works from any device/browser that loads the published site.
 ========================== */
 const loginScreen   = document.getElementById("loginScreen");
 const dashboardEl   = document.getElementById("dashboard");
@@ -76,7 +208,7 @@ function clearLoginError(){
 }
 
 function isFirstRun(){
-    return !localStorage.getItem(LS_PW_HASH);
+    return !state.settings.adminPasswordHash;
 }
 
 function renderLoginMode(){
@@ -108,14 +240,20 @@ loginForm.addEventListener("submit", async (e) => {
             showLoginError("Passwords don't match.");
             return;
         }
-        localStorage.setItem(LS_PW_HASH, await sha256(pw));
+        state.settings.adminPasswordHash = await sha256(pw);
+        saveDraft();
         sessionStorage.setItem(SS_AUTH, "1");
         enterDashboard();
+        toast(
+            "info",
+            "One more step",
+            "Your password is saved as a local draft. Publish it now (Publish & Settings tab) so it also works on your other devices."
+        );
         return;
     }
 
     const hash = await sha256(pwInput.value);
-    if (hash === localStorage.getItem(LS_PW_HASH)){
+    if (hash === state.settings.adminPasswordHash){
         sessionStorage.setItem(SS_AUTH, "1");
         enterDashboard();
     } else {
@@ -130,37 +268,6 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
     pwInput.value = "";
     renderLoginMode();
 });
-
-/* ==========================
-   CONTENT STATE
-========================== */
-let state = { projects: [], testimonials: [] };
-
-async function loadState(){
-    const draft = localStorage.getItem(LS_DRAFT);
-    if (draft){
-        try {
-            state = JSON.parse(draft);
-            return;
-        } catch(e){ /* fall through to fetch */ }
-    }
-
-    try {
-        const res = await fetch(CONTENT_URL, { cache: "no-store" });
-        if (res.ok){
-            state = await res.json();
-        }
-    } catch(e){
-        state = { projects: [], testimonials: [] };
-    }
-    saveDraft();
-}
-
-function saveDraft(){
-    localStorage.setItem(LS_DRAFT, JSON.stringify(state));
-    const pillText = document.getElementById("draftPillText");
-    if (pillText) pillText.textContent = "Saved locally — publish to go live";
-}
 
 /* ==========================
    RENDER: PROJECTS
@@ -297,6 +404,15 @@ pImage.addEventListener("input", () => {
     }
 });
 
+const pImageToggle = document.getElementById("pImageToggle");
+const pImageFile = document.getElementById("pImageFile");
+const pImageFileHint = document.getElementById("pImageFileHint");
+const pImageDefaultHint = pImageFileHint.textContent;
+wireImageUploader({
+    toggleEl: pImageToggle, urlInput: pImage, fileInput: pImageFile, hintEl: pImageFileHint,
+    defaultHint: pImageDefaultHint, maxDim: 1400, quality: 0.82
+});
+
 function setSwitch(el, on){
     el.classList.toggle("is-on", !!on);
     el.dataset.on = on ? "1" : "0";
@@ -319,6 +435,9 @@ function openProjectModal(index){
         pImagePreview.removeAttribute("src");
         pImagePreview.style.display = "none";
     }
+    pImageFile.value = "";
+    pImageFileHint.textContent = pImageDefaultHint;
+    setImageMode(pImageToggle, pImage, document.getElementById("pImageUploadWrap"), (p.image || "").startsWith("data:") ? "upload" : "url");
     pDescription.value = p.description || "";
     pLink.value = p.link || "";
     currentTags = [...(p.tags || [])];
@@ -344,7 +463,7 @@ document.getElementById("pSaveBtn").addEventListener("click", () => {
     const description = pDescription.value.trim();
 
     if (!title || !image || !description){
-        toast("warning", "Missing details", "Title, image URL, and description are required.");
+        toast("warning", "Missing details", "Title, image, and description are required.");
         return;
     }
 
@@ -457,8 +576,27 @@ const testiModalHeading = document.getElementById("testiModalHeading");
 const tName = document.getElementById("tName");
 const tRole = document.getElementById("tRole");
 const tAvatar = document.getElementById("tAvatar");
+const tAvatarPreview = document.getElementById("tAvatarPreview");
 const tQuote = document.getElementById("tQuote");
 const tDeleteBtn = document.getElementById("tDeleteBtn");
+
+tAvatar.addEventListener("input", () => {
+    if (tAvatar.value.trim()){
+        tAvatarPreview.src = tAvatar.value.trim();
+        tAvatarPreview.style.display = "block";
+    } else {
+        tAvatarPreview.style.display = "none";
+    }
+});
+
+const tAvatarToggle = document.getElementById("tAvatarToggle");
+const tAvatarFile = document.getElementById("tAvatarFile");
+const tAvatarFileHint = document.getElementById("tAvatarFileHint");
+const tAvatarDefaultHint = tAvatarFileHint.textContent;
+wireImageUploader({
+    toggleEl: tAvatarToggle, urlInput: tAvatar, fileInput: tAvatarFile, hintEl: tAvatarFileHint,
+    defaultHint: tAvatarDefaultHint, maxDim: 320, quality: 0.85
+});
 
 let editingTestimonialIndex = null;
 
@@ -471,6 +609,16 @@ function openTestimonialModal(index){
     tName.value = t.name || "";
     tRole.value = t.role || "";
     tAvatar.value = t.avatar || "";
+    if (t.avatar){
+        tAvatarPreview.src = t.avatar;
+        tAvatarPreview.style.display = "block";
+    } else {
+        tAvatarPreview.removeAttribute("src");
+        tAvatarPreview.style.display = "none";
+    }
+    tAvatarFile.value = "";
+    tAvatarFileHint.textContent = tAvatarDefaultHint;
+    setImageMode(tAvatarToggle, tAvatar, document.getElementById("tAvatarUploadWrap"), (t.avatar || "").startsWith("data:") ? "upload" : "url");
     tQuote.value = t.quote || "";
     tDeleteBtn.style.display = isNew ? "none" : "inline-flex";
 
@@ -595,6 +743,17 @@ document.getElementById("publishBtn").addEventListener("click", async () => {
     if (!settings.owner || !settings.repo || !settings.token) {
         toast("warning", "Not connected", "Save your GitHub connection details first.");
         return;
+    }
+
+    const contentSizeKb = Math.round(JSON.stringify(state).length / 1024);
+    if (contentSizeKb > 800){
+        const proceed = await Swal.fire({
+            icon: "warning",
+            title: "That's a lot of content",
+            text: `content.json is around ${contentSizeKb}KB — likely from uploaded images. GitHub's API can reject files over ~1MB. Consider using image URLs instead of uploads for a few items, or continue anyway.`,
+            showCancelButton: true, confirmButtonText: "Publish anyway", cancelButtonText: "Cancel"
+        }).then(r => r.isConfirmed);
+        if (!proceed) return;
     }
 
     const btn = document.getElementById("publishBtn");
@@ -742,29 +901,36 @@ document.getElementById("changePwBtn").addEventListener("click", async () => {
         return;
     }
     const oldHash = await sha256(oldPw);
-    if (oldHash !== localStorage.getItem(LS_PW_HASH)){
+    if (oldHash !== state.settings.adminPasswordHash){
         toast("error", "Incorrect password", "Your current password doesn't match.");
         return;
     }
-    localStorage.setItem(LS_PW_HASH, await sha256(newPw));
+    state.settings.adminPasswordHash = await sha256(newPw);
+    saveDraft();
     document.getElementById("oldPwInput").value = "";
     document.getElementById("newPwInput").value = "";
-    toastQuick("success", "Password updated");
+    toast("success", "Password updated", "This is saved as a local draft — publish it (Publish & Settings tab) so the new password works on your other devices too.");
 });
 
 /* ==========================
    BOOTSTRAP
 ========================== */
-async function enterDashboard(){
+function enterDashboard(){
     loginScreen.style.display = "none";
     dashboardEl.style.display = "block";
-    await loadState();
     renderProjectsAdmin();
     renderTestimonialsAdmin();
     loadGhSettings();
 }
 
-renderLoginMode();
-if (sessionStorage.getItem(SS_AUTH) === "1" && !isFirstRun()){
-    enterDashboard();
-}
+(async function init(){
+    // Content (incl. the published password hash) has to be loaded first —
+    // it's what tells us whether this is first-run setup or a normal login.
+    await loadState();
+    renderLoginMode();
+    if (sessionStorage.getItem(SS_AUTH) === "1" && !isFirstRun()){
+        enterDashboard();
+    } else {
+        loginScreen.style.display = "flex";
+    }
+})();
