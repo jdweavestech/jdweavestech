@@ -350,7 +350,7 @@ section{ padding:60px 0; }
 .process-list{ border-top:1px solid var(--border); }
 .process-item{
     display:grid; grid-template-columns:80px 1fr 1.4fr; gap:30px; align-items:center;
-    padding:34px 0; border-bottom:1px solid var(--border);
+    padding:34px 10px; border-bottom:1px solid var(--border);
     transition: all ease 300ms;
 }
 .process-item:hover 
@@ -660,6 +660,7 @@ footer{ border-top:1px solid var(--border); padding:44px 0; }
     .hero-grid{ grid-template-columns:1fr; }
     .hero{ padding:150px 0 80px; }
     .about-grid, .skills-grid{ grid-template-columns:1fr; }
+    .about-photo-wrap{max-width: 500px;width:100%;margin:0 auto;}
     .project-grid{ grid-template-columns:1fr; }
     .testi-grid{ grid-template-columns:1fr; }
     .contact-body{ grid-template-columns:1fr; padding:36px 26px 40px; }
