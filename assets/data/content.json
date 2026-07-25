@@ -71,28 +71,6 @@
       ],
       "link": "",
       "nda": false
-    },
-    {
-      "title": "Project Seven",
-      "image": "https://api.dicebear.com/9.x/shapes/svg?seed=project-seven",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum.",
-      "tags": [
-        "Shopify",
-        "Liquid"
-      ],
-      "link": "",
-      "nda": false
-    },
-    {
-      "title": "Project Eight",
-      "image": "https://api.dicebear.com/9.x/shapes/svg?seed=project-eight",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id ligula porta felis euismod semper.",
-      "tags": [
-        "Webflow",
-        "GSAP"
-      ],
-      "link": "",
-      "nda": false
     }
   ],
   "testimonials": [
