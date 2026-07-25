@@ -591,59 +591,125 @@ function b64EncodeUnicode(str){
 
 document.getElementById("publishBtn").addEventListener("click", async () => {
     const settings = JSON.parse(localStorage.getItem(LS_GH_SETTINGS) || "{}");
-    if (!settings.owner || !settings.repo || !settings.token){
+
+    if (!settings.owner || !settings.repo || !settings.token) {
         toast("warning", "Not connected", "Save your GitHub connection details first.");
         return;
     }
 
     const btn = document.getElementById("publishBtn");
     btn.disabled = true;
+
     const originalText = btn.textContent;
     btn.textContent = "Publishing…";
+
     setGhStatus("", "Publishing…");
 
     const apiUrl = `https://api.github.com/repos/${settings.owner}/${settings.repo}/contents/${settings.path}`;
+
     const headers = {
         Authorization: `Bearer ${settings.token}`,
-        Accept: "application/vnd.github+json"
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28"
     };
 
-    try {
-        let sha;
-        const getRes = await fetch(`${apiUrl}?ref=${encodeURIComponent(settings.branch)}`, { headers });
-        if (getRes.ok){
-            const fileData = await getRes.json();
-            sha = fileData.sha;
-        } else if (getRes.status !== 404){
-            const errData = await getRes.json().catch(() => ({}));
-            throw new Error(errData.message || `GitHub returned ${getRes.status}`);
+    async function getLatestSha() {
+        const res = await fetch(
+            `${apiUrl}?ref=${encodeURIComponent(settings.branch)}`,
+            { headers }
+        );
+
+        if (res.status === 404) {
+            return null;
         }
 
-        const putRes = await fetch(apiUrl, {
+        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error(data.message || "Unable to retrieve file.");
+        }
+
+        return data.sha;
+    }
+
+    async function upload(sha) {
+        const res = await fetch(apiUrl, {
             method: "PUT",
-            headers: { ...headers, "Content-Type": "application/json" },
+            headers: {
+                ...headers,
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify({
                 message: "Update site content via dashboard",
-                content: b64EncodeUnicode(JSON.stringify(state, null, 2)),
+                branch: settings.branch,
                 sha,
-                branch: settings.branch
+                content: b64EncodeUnicode(JSON.stringify(state, null, 2))
             })
         });
 
-        if (!putRes.ok){
-            const errData = await putRes.json().catch(() => ({}));
-            throw new Error(errData.message || `GitHub returned ${putRes.status}`);
+        const data = await res.json();
+
+        if (!res.ok) {
+            const err = new Error(data.message || `GitHub ${res.status}`);
+            err.status = res.status;
+            throw err;
+        }
+
+        return data;
+    }
+
+    try {
+
+        let sha = await getLatestSha();
+
+        try {
+
+            await upload(sha);
+
+        } catch (err) {
+
+            // Retry once if SHA changed
+            if (
+                err.status === 409 ||
+                err.message.includes("does not match")
+            ) {
+
+                console.warn("SHA conflict detected. Retrying...");
+
+                sha = await getLatestSha();
+
+                await upload(sha);
+
+            } else {
+
+                throw err;
+
+            }
+
         }
 
         setGhStatus("ok", "Published — live in about a minute");
         toastQuick("success", "Published to GitHub");
-    } catch(err){
-        setGhStatus("err", "Publish failed — see message");
-        toast("error", "Publish failed", err.message || "Something went wrong talking to GitHub.");
+
+    } catch (err) {
+
+        console.error(err);
+
+        setGhStatus("err", "Publish failed");
+
+        toast(
+            "error",
+            "Publish failed",
+            err.message || "Unable to publish."
+        );
+
     } finally {
+
         btn.disabled = false;
         btn.textContent = originalText;
+
     }
+
 });
 
 /* ==========================
