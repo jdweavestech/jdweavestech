@@ -136,6 +136,12 @@
       "role": "Business Owner",
       "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=david-kim",
       "quote": "One of the best developers we've hired. Great attention to detail and excellent communication."
+    },
+    {
+      "name": "Johnny Appleseed",
+      "role": "Founder, ABCDE",
+      "quote": "Test",
+      "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=johnny-appleseed"
     }
   ]
 }
