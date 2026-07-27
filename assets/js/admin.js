@@ -140,8 +140,15 @@ function normalizeState(s){
     s = s && typeof s === "object" ? s : {};
     if (!Array.isArray(s.projects)) s.projects = [];
     if (!Array.isArray(s.testimonials)) s.testimonials = [];
-    if (!s.settings || typeof s.settings !== "object") s.settings = { adminPasswordHash: "" };
+    if (!s.settings || typeof s.settings !== "object") s.settings = {};
     if (typeof s.settings.adminPasswordHash !== "string") s.settings.adminPasswordHash = "";
+    if (!s.settings.github || typeof s.settings.github !== "object") s.settings.github = {};
+    s.settings.github = {
+        owner: s.settings.github.owner || "",
+        repo: s.settings.github.repo || "",
+        branch: s.settings.github.branch || "main",
+        path: s.settings.github.path || "assets/data/content.json"
+    };
     return s;
 }
 
@@ -698,17 +705,36 @@ const ghToken = document.getElementById("ghToken");
 const ghStatus = document.getElementById("ghStatus");
 
 function loadGhSettings(){
+    let localToken = "";
     try {
-        const saved = JSON.parse(localStorage.getItem(LS_GH_SETTINGS) || "{}");
-        ghOwner.value = saved.owner || "";
-        ghRepo.value = saved.repo || "";
-        ghBranch.value = saved.branch || "main";
-        ghPath.value = saved.path || "assets/data/content.json";
-        ghToken.value = saved.token || "";
-        if (saved.owner && saved.repo && saved.token){
-            setGhStatus("ok", `Connected to ${saved.owner}/${saved.repo}`);
+        const savedLocal = JSON.parse(localStorage.getItem(LS_GH_SETTINGS) || "{}");
+        localToken = savedLocal.token || "";
+        // One-time migration: this device may have owner/repo/branch/path from
+        // before they synced via published settings — carry them over once.
+        if ((!state.settings.github || (!state.settings.github.owner && !state.settings.github.repo)) &&
+            (savedLocal.owner || savedLocal.repo)){
+            state.settings.github = {
+                owner: savedLocal.owner || "",
+                repo: savedLocal.repo || "",
+                branch: savedLocal.branch || "main",
+                path: savedLocal.path || "assets/data/content.json"
+            };
+            saveDraft();
         }
     } catch(e){}
+
+    const g = state.settings.github || {};
+    ghOwner.value = g.owner || "";
+    ghRepo.value = g.repo || "";
+    ghBranch.value = g.branch || "main";
+    ghPath.value = g.path || "assets/data/content.json";
+    ghToken.value = localToken;
+
+    if (g.owner && g.repo && localToken){
+        setGhStatus("ok", `Connected to ${g.owner}/${g.repo}`);
+    } else if (g.owner && g.repo){
+        setGhStatus("", `${g.owner}/${g.repo} — paste this device's access token below to publish from here`);
+    }
 }
 
 function setGhStatus(kind, text){
@@ -717,20 +743,31 @@ function setGhStatus(kind, text){
 }
 
 document.getElementById("saveGhSettings").addEventListener("click", () => {
-    const settings = {
-        owner: ghOwner.value.trim(),
-        repo: ghRepo.value.trim(),
-        branch: ghBranch.value.trim() || "main",
-        path: ghPath.value.trim() || "assets/data/content.json",
-        token: ghToken.value.trim()
-    };
-    if (!settings.owner || !settings.repo || !settings.token){
+    const owner = ghOwner.value.trim();
+    const repo = ghRepo.value.trim();
+    const branch = ghBranch.value.trim() || "main";
+    const path = ghPath.value.trim() || "assets/data/content.json";
+    const token = ghToken.value.trim();
+
+    if (!owner || !repo || !token){
         toast("warning", "Missing details", "Owner, repository, and access token are required to connect.");
         return;
     }
-    localStorage.setItem(LS_GH_SETTINGS, JSON.stringify(settings));
-    setGhStatus("ok", `Connected to ${settings.owner}/${settings.repo}`);
-    toastQuick("success", "Connection saved");
+
+    // Owner/repo/branch/path aren't secret, so they're saved as a normal draft
+    // and publish like everything else — other devices then see them pre-filled.
+    // The token is a real credential, so it's kept in THIS browser only and
+    // needs to be pasted in again on each device you publish from.
+    state.settings.github = { owner, repo, branch, path };
+    saveDraft();
+    localStorage.setItem(LS_GH_SETTINGS, JSON.stringify({ token }));
+
+    setGhStatus("ok", `Connected to ${owner}/${repo}`);
+    toast(
+        "success",
+        "Connection saved",
+        "Repo details are saved as a local draft — publish so other devices see them pre-filled. Your access token stays only on this device and needs pasting in separately on each one."
+    );
 });
 
 function b64EncodeUnicode(str){
@@ -738,7 +775,14 @@ function b64EncodeUnicode(str){
 }
 
 document.getElementById("publishBtn").addEventListener("click", async () => {
-    const settings = JSON.parse(localStorage.getItem(LS_GH_SETTINGS) || "{}");
+    const g = state.settings.github || {};
+    let token = "";
+    try { token = JSON.parse(localStorage.getItem(LS_GH_SETTINGS) || "{}").token || ""; } catch(e){}
+    const settings = {
+        owner: g.owner || "", repo: g.repo || "",
+        branch: g.branch || "main", path: g.path || "assets/data/content.json",
+        token
+    };
 
     if (!settings.owner || !settings.repo || !settings.token) {
         toast("warning", "Not connected", "Save your GitHub connection details first.");

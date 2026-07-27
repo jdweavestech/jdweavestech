@@ -127,7 +127,7 @@
                                     <p>Connect the repo this site is deployed from once. After that, "Publish live" commits your changes straight to <span class="mono">assets/data/content.json</span> — your host redeploys automatically and the live site updates within about a minute.</p>
 
                                     <div class="note-box">
-                                        <strong>About your token:</strong> it's stored only in this browser's local storage and sent only to GitHub's API — never anywhere else. Use a fine-grained token scoped just to this repo's contents.
+                                        <strong>About your token:</strong> the repo owner, name, branch, and file path are saved with your content, so they'll show up pre-filled on your other devices too. Your access token is different — it's a real credential, so it's kept only in this browser's local storage and is only ever sent to GitHub's API. You'll need to paste it in again on each device you publish from. Use a fine-grained token scoped just to this repo's contents.
                                     </div>
 
                                     <div class="field">
@@ -151,6 +151,7 @@
                                     <div class="field">
                                         <label for="ghToken">access_token</label>
                                         <input id="ghToken" type="password" placeholder="ghp_...">
+                                        <p class="field-hint">This device only — not saved with your published content.</p>
                                     </div>
 
                                     <div class="settings-actions">
