@@ -21,7 +21,8 @@
         "Vite",
         "JavaScript",
         "HTML",
-        "CSS"
+        "CSS",
+        "GSAP"
       ],
       "link": "https://cabangrunclub.vercel.app/",
       "nda": false
